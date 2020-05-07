@@ -1,15 +1,16 @@
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebPackPlugin = require("html-webpack-plugin")
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const common = require('./webpack.common.js');
+const merge = require('webpack-merge');
 
-module.exports = {
-    entry: './src/client/index.js',
+module.exports = merge(common, {
+    mode: 'development',
     output: {
         libraryTarget: 'var',
         library: 'Client'
     },
-    mode: 'development',
     devtool: 'source-map',
     module: {
         rules: [
@@ -20,7 +21,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [ 'style-loader', 'css-loader', 'sass-loader' ]
+                use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
     },
@@ -39,4 +40,4 @@ module.exports = {
             protectWebpackAssets: false
         })
     ]
-}
+});
