@@ -3,14 +3,16 @@ function handleSubmit(event) {
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value
-    checkForName(formText)
+
+    Client.checkForName(formText)
 
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:8080/test')
-    .then(res => res.json())
-    .then(function(res) {
-        document.getElementById('results').innerHTML = res.message
-    })
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+        .then(res => res.json())
+        .then(function (data) {
+            console.log(data);
+            document.getElementById('results').innerHTML = data.title;
+        })
 }
 
 export { handleSubmit }
