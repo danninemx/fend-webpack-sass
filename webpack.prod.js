@@ -6,9 +6,17 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common.js');
 const merge = require('webpack-merge');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
+
+    // suggested at the end for classroom workspace
+    output: {
+        libraryTarget: 'var',
+        library: 'Client'
+    },
+
     optimization: {
         minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
     },
@@ -30,6 +38,7 @@ module.exports = merge(common, {
             template: "./src/client/views/index.html",
             filename: "./index.html",
         }),
-        new MiniCssExtractPlugin({ filename: '[name].css' })
-    ]
+        new MiniCssExtractPlugin({ filename: '[name].css' }),
+        new WorkboxPlugin.GenerateSW(),
+    ],
 });
